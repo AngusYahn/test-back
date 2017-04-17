@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>创建测试</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a class="navbar-brand">百词斩 | 宇宙中心研究院</a>
+        </div>
+    </nav>
+
+    <div class="container" id="app">
+        <div class="col-lg-8">
+
+            <div class="panel panel-default" v-if="addReady">
+                <div class="panel-heading">
+                    <h3>创建测试</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="20" placeholder="题目文本" v-model="test"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" placeholder="请输入秘钥" v-model="password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" v-on:click="addTest">提交测试</button>
+                </div>
+            </div>
+            <div v-else>{{ response }}</div>
+        </div>
+
+        <div class="col-lg-4">
+            <h4>示例</h4>
+            <p>1 (正确答案序号[1-4])</p>
+            <br>
+            <p>xxxxxxxxxxxxxxxxxxx (题干)</p>
+            <br>
+            <p>xxxxxxxxxxxx? (问题)</p>
+            <br>
+            <p>aaaaaaaaaa (选项A,勿加选项字母)</p>
+            <br>
+            <p>bbbbbbbbbb (选项B,勿加选项字母)</p>
+            <br>
+            <p>cccccccccc (选项C,勿加选项字母)</p>
+            <br>
+            <p>dddddddddd (选项D,勿加选项字母)</p>
+            <br>
+            <p> (留一空行,勿加任何空格和内容)</p>
+        </div>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+    <script src="addTest.js"></script>
+</body>
+</html>

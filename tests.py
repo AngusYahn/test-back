@@ -8,7 +8,7 @@ def add_test(test_str):
     # init test
     test_doc = dict()
     today = datetime.datetime.now()
-    today = today.strftime("%Y-%m-%d")
+    today = today.strftime("%Y-%m-%d %H:%M:%S")
     test_doc["createTime"] = today
     test_doc["updateTime"] = today
     test_doc["questionAmount"] = len(test_questions)

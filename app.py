@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
+from pymongo import DESCENDING
 import config as cfg
 import tests
 from datetime import timedelta
@@ -43,14 +44,20 @@ def crossdomain(origin=None, methods=None, headers=None,
             h['Access-Control-Allow-Methods'] = "*"
             h['Access-Control-Max-Age'] = str(max_age)
             # if headers is not None:
-                # h['Access-Control-Allow-Headers'] = headers
+            # h['Access-Control-Allow-Headers'] = headers
             h['Access-Control-Allow-Headers'] = "content-type"
 
             return resp
 
         f.provide_automatic_options = False
         return update_wrapper(wrapped_function, f)
+
     return decorator
+
+
+@app.route('/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
 
 
 @app.route('/users/<uid>')
@@ -62,7 +69,7 @@ def fetch_user(uid=None):
         return jsonify(result)
 
 
-@app.route('/tests', methods=['OPTIONS', 'POST'])
+@app.route('/tests', methods=['OPTIONS', 'POST', 'GET'])
 @crossdomain(origin='*')
 def regist_test():
     if request.method == "POST":
@@ -75,12 +82,15 @@ def regist_test():
             return "OK"
         return "Insertion Failed"
 
+    if request.method == "GET":
+        result = list(cfg.tests.find().sort([("updateTime", DESCENDING)]))
+        for i, doc in enumerate(result):
+            d = doc.copy()
+            d["_id"] = str(d["_id"])
+            result[i] = d
 
+        return jsonify(result)
 
-# @app.route('/user', methods=['GET', 'POST'])
-# def regist_user():
-#     if request.method == "POST":
-#
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
