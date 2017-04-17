@@ -1,9 +1,11 @@
 import datetime
+import re
 import config as cfg
 
 
 def add_test(test_str):
-    test_questions = test_str.split("\n\n")
+    test_questions = re.split("\n\s*?\n", test_str)
+    # test_questions = test_str.split("\n\n")
 
     # init test
     test_doc = dict()
