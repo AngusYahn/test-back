@@ -17,7 +17,7 @@ new Vue({
         addTest: function(){
             submitText = this._data.password + "//" + this._data.test;
             console.log(submitText);
-            this.$http.post('http://localhost:5000/tests', submitText).then(function(response) {
+            this.$http.post('/tests', submitText).then(function(response) {
                 this.addReady = false;
                 this.test = "";
                 this.response = response.data;
