@@ -54,12 +54,15 @@ new Vue({
                         for (i = 0; i < this.tests.length; i++) {
                             this.tests[i].finished = this.finishedTests.indexOf(this.tests[i]._id) != -1;
                         }
-                        console.log(this.tests);
                     }
 
                 });
             }
 
+        },
+        startTest: function(testIndex){
+            var test = this.tests[testIndex];
+            console.log(test);
         }
     }
 });

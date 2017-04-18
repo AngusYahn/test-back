@@ -24,13 +24,13 @@
 
                 <div class="panel-body">
                     <div class="list-group">
-                        <div class="list-group-item" v-if="tests" v-for="test in tests">
+                        <div class="list-group-item" v-if="tests" v-for="(test, index) in tests">
                             <h4 class="list-group-item-heading">
                                 <i class="glyphicon glyphicon-list"></i>
                                  创建时间: {{ test.updateTime }} , 题目数: {{ test.questionAmount }}
                             </h4>
 
-                            <button class="btn btn-sm btn-primary" v-if="!test.finished" v-on:click="deleteEvent($index)">开始 ></button>
+                            <button class="btn btn-sm btn-primary" v-if="!test.finished" v-on:click="startTest(index)">开始 ></button>
                             <button class="btn btn-sm disabled" v-if="test.finished">已完成</button>
                         </div>
                     </div>
