@@ -114,5 +114,16 @@ def regist_test():
         return jsonify(result)
 
 
+@app.route('/log', methods=['OPTIONS', 'POST'])
+@crossdomain(origin='*')
+def record_log():
+    if request.method == "POST":
+        x = request.get_json()
+        cfg.logs.insert_one(x)
+        cfg.users.update_one({"_id": ObjectId(x["uid"])}, {"$push": {"finishedTests": x["testId"]}})
+
+    return "OK"
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

@@ -3,9 +3,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>阅读能力测试 Alpha</title>
+    <title>Mint Assessment (ALPHA)</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     </nav>
 
     <div class="container" id="app">
-        <div class="col-sm-6">
+        <div class="col-sm-6" v-if="!showTest">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>测试列表</h3>
@@ -39,11 +40,65 @@
             </div>
         </div>
 
+        <!--test zone-->
+        <div class="container-fluid" v-if="showTest">
+    <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h3 v-if="!showScore"><span class="label label-primary" id="qid">{{ questionIndex }}</span> </h3>
+             <h3 v-if="showScore">测试完成!</h3>
+             <!--<h5>{{ curQuestion.question }}</h5>-->
+        </div>
+        <div class="modal-body">
+             <p v-if="!showScore" style="font-size: 16px">{{ curQuestion.passage}} </p>
+            <p v-if="!showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>{{ curQuestion.question }}</b></p>
+            <p v-if="showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>感谢你参加这次测试!您的测试分数为 {{correctItems}} / {{test.questionAmount}}</b></p>
+            <div class="col-xs-3 col-xs-offset-5">
+               <div id="loadbar" style="display: none;">
+                  <div class="blockG" id="rotateG_01"></div>
+                  <div class="blockG" id="rotateG_02"></div>
+                  <div class="blockG" id="rotateG_03"></div>
+                  <div class="blockG" id="rotateG_04"></div>
+                  <div class="blockG" id="rotateG_05"></div>
+                  <div class="blockG" id="rotateG_06"></div>
+                  <div class="blockG" id="rotateG_07"></div>
+                  <div class="blockG" id="rotateG_08"></div>
+              </div>
+          </div>
+
+
+
+          <div v-if="!showScore" class="quiz" id="quiz" data-toggle="buttons">
+           <label  v-bind:class="[userChoiceRandomIndex == index ? 'btn-info' :'btn-default' , 'choice', 'element-animation1', 'btn', 'btn-lg', 'btn-block' ]" v-on:click="chooseAnswer(choice.oriIndex, index)" v-for="(choice, index) in curQuestion.choices">
+               <span class="btn-label">
+                   <i class="glyphicon glyphicon-chevron-right"></i>
+               </span>
+               <input type="radio" name="q_answer">
+               {{ choice.content }}
+           </label>
+
+       </div>
+   </div>
+   <div class="modal-footer text-muted" v-if="!showScore">
+       <div class="btn btn-primary" v-if="userChoiceRandomIndex >= 0 && !curQuestion.isFinished" v-on:click="submitQuestion()">Submit</div>
+       <div class="btn btn-primary" v-if="userChoiceRandomIndex >= 0 && curQuestion.isFinished" v-on:click="finishTest()">Finish</div>
+</div>
+          <div class="modal-foot text-muted" v-if="showScore && scoreSuccess">
+              <!--<div class="btn btn-primary"> <a href=".">返回</a></div>-->
+               <input type="button" class="btn btn-primary" value="返回" onclick="location.href = '.';">
+
+          </div>
+</div>
+</div>
+</div>
+
+
         <modal v-if="showModal" @close="showModal = false">
             <h4>hello</h4>
         </modal>
 
     </div>
+
 
     <script type="text/x-template" id="modal-template">
         <transition name="modal">
