@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>阅读能力测试 Alpha</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="modal.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a class="navbar-brand">百词斩 | 宇宙中心研究院</a>
+        </div>
+    </nav>
+
+    <div class="container" id="app">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>测试列表</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="list-group">
+                        <div class="list-group-item" v-if="tests" v-for="test in tests">
+                            <h4 class="list-group-item-heading">
+                                <i class="glyphicon glyphicon-list"></i>
+                                 创建时间: {{ test.updateTime }} , 题目数: {{ test.questionAmount }}
+                            </h4>
+
+                            <button class="btn btn-sm btn-primary" v-if="!test.finished" v-on:click="deleteEvent($index)">开始 ></button>
+                            <button class="btn btn-sm disabled" v-if="test.finished">已完成</button>
+                        </div>
+                    </div>
+                    <p>感谢你对Mint Assessment的贡献! <br> 请不要使用浏览器的"隐身模式"完成测试.</p>
+                </div>
+            </div>
+        </div>
+
+        <modal v-if="showModal" @close="showModal = false">
+            <h4>hello</h4>
+        </modal>
+
+    </div>
+
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+
+                        <div class="modal-header">
+                            <slot name="header">
+                                请选择最符合你英语水平的一项
+                            </slot>
+                        </div>
+
+                        <div class="modal-body">
+                            <slot name="body">
+                                <!-- Single button -->
+                                <div class="btn-group">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    入门 <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu">
+                                    <li v-on:click="createUser('elementary')"><a>入门</a></li>
+                                    <li v-on:click="createUser('high school')"><a>高中</a></li>
+                                    <li v-on:click="createUser('CET4')"><a>CET4 425+</a></li>
+                                      <li v-on:click="createUser('CET6')"><a>CET6 425+</a></li>
+                                      <li v-on:click="createUser('TOEFL 80')"><a>TOEFL 80+</a></li>
+                                      <li v-on:click="createUser('TOEFL 100')"><a>TOEFL 100+</a></li>
+                                      <li v-on:click="createUser('TOEFL 115')"><a>TOEFL 115+</a></li>
+                                      <li v-on:click="createUser('TEM8 80')"><a>TEM8 80+</a></li>
+                                  </ul>
+                                </div>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/js/dropdown.js"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+    <script src="node_modules/vue-localstorage/vue-localstorage.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

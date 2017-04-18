@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify, send_from_directory
 from pymongo import DESCENDING
 import config as cfg
 import tests
+import datetime
 from datetime import timedelta
 from flask import make_response, current_app
 from functools import update_wrapper
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -55,18 +57,38 @@ def crossdomain(origin=None, methods=None, headers=None,
     return decorator
 
 
+@app.route('/')
+def send_index():
+    return send_from_directory('static', 'index.html')
+
+
 @app.route('/<path:path>')
 def send_js(path):
     return send_from_directory('static', path)
 
 
-@app.route('/users/<uid>')
+@app.route('/user/<uid>')
 def fetch_user(uid=None):
-    cur_user = cfg.users.find_one({"uid": str(uid)})
+    cur_user = cfg.users.find_one({"_id": ObjectId(uid)})
     if cur_user:
         result = cur_user.copy()
         result["_id"] = str(result["_id"])
         return jsonify(result)
+
+
+@app.route('/user', methods=['OPTIONS', 'POST', 'GET'])
+@crossdomain(origin='*')
+def regist_user():
+    if request.method == "POST":
+        data = request.get_json()
+        temp_doc = {
+            "registTime": datetime.datetime.now(),
+            "recentLogin": datetime.datetime.now(),
+            "userLevel": data["level"],
+            "finishedTests": []
+        }
+        x = cfg.users.insert_one(temp_doc)
+        return str(x.inserted_id)
 
 
 @app.route('/tests', methods=['OPTIONS', 'POST', 'GET'])
