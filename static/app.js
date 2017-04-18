@@ -30,7 +30,7 @@ new Vue({
     },
     methods: {
         fetchTests: function () {
-            this.$http.get('http://reading.ronfe.net/tests').then(function (response) {
+            this.$http.get('/tests').then(function (response) {
                 this.tests = response.data;
                 if (this.finishedTests) {
                     for (i = 0; i < this.tests.length; i++) {
@@ -43,7 +43,6 @@ new Vue({
             //this.$localStorage.remove("userId");
             var me = this.$localStorage.get('userId');
             if (!me) {
-                //this.showAbilityChoose = true;
                 this.showModal = true;
             }
             else {
