@@ -51,7 +51,7 @@
              <!--<h5>{{ curQuestion.question }}</h5>-->
         </div>
         <div class="modal-body">
-             <p v-if="!showScore" style="font-size: 16px">{{ curQuestion.passage}} </p>
+             <div v-if="!showScore" style="font-size: 16px" v-html="curQuestion.passage" ></div>
             <p v-if="!showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>{{ curQuestion.question }}</b></p>
             <p v-if="showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>感谢你参加这次测试!您的测试分数为 {{correctItems}} / {{test.questionAmount}}</b></p>
             <div class="col-xs-3 col-xs-offset-5">
