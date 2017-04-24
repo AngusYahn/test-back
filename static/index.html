@@ -11,13 +11,13 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="margin-bottom: 10px">
         <div class="container-fluid">
             <a class="navbar-brand">百词斩 | 宇宙中心研究院</a>
         </div>
     </nav>
 
-    <div class="container" id="app">
+    <div class="container" id="app" style="padding: 0">
         <div class="col-sm-6" v-if="!showTest">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -50,10 +50,10 @@
              <h3 v-if="showScore">测试完成!</h3>
              <!--<h5>{{ curQuestion.question }}</h5>-->
         </div>
-        <div class="modal-body">
-             <p v-if="!showScore" style="font-size: 16px">{{ curQuestion.passage}} </p>
+        <div class="modal-body" style="margin: 5px 0">
+             <p v-if="!showScore" style="font-size: 14px">{{ curQuestion.passage}} </p>
             <p v-if="!showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>{{ curQuestion.question }}</b></p>
-            <p v-if="showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 16px;"><b>感谢你参加这次测试!您的测试分数为 {{correctItems}} / {{test.questionAmount}}</b></p>
+            <p v-if="showScore" style="padding-top: 5px; padding-botton: 5px;font-size: 14px;"><b>感谢你参加这次测试!您的测试分数为 {{correctItems}} / {{test.questionAmount}}</b></p>
             <div class="col-xs-3 col-xs-offset-5">
                <div id="loadbar" style="display: none;">
                   <div class="blockG" id="rotateG_01"></div>
